@@ -7,11 +7,16 @@
     "test": "test"
   },
   "scripts": {
+    "start": "node index.js",
     "dev": "lite-server",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "author": "",
   "license": "ISC",
+  "dependencies": {
+    "ejs": "^2.5.6",
+    "express": "^4.15.2"
+  },
   "devDependencies": {
     "lite-server": "^2.3.0"
   }
