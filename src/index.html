@@ -27,6 +27,13 @@
         </div>
       </div>
 
+      <div class="row">
+        <div class="col-lg-12">
+          <p id="account" class="welcome pull-right"></p>
+          <p id="accountBalance" class="welcome pull-left"></p>
+        </div>
+      </div>
+
       <div id="playersRow" class="row">
         <!-- PLAYERS LOAD HERE -->
       </div>
@@ -43,7 +50,7 @@
             <br/><br/>
             <strong>Position</strong>: <span class="player-position">Forward</span><br/>
             <strong>Number</strong>: <span class="player-number">3</span><br/>
-            <button class="btn btn-default btn-claim" type="button" data-id="0">Claim</button>
+            <button class="btn btn-default btn-claim" onclick="App.claimPlayer($(this).data('id'));" type="button" data-id="0">Claim</button>
           </div>
         </div>
       </div>
