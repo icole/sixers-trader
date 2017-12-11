@@ -46,29 +46,57 @@ App = {
   },
 
   initContract: function() {
-    /*
-     * Replace me...
-     */
+    $.getJSON('SixersTrader.json', function(sixersTraderArtifact) {
+      // Get the necessary contract artifact file and use it to instantiate a truffle contract abstraction.
+      App.contracts.SixersTrader = TruffleContract(sixersTraderArtifact);
 
-    return App.bindEvents();
+      // Set the provider for our contract.
+      App.contracts.SixersTrader.setProvider(App.web3Provider);
+
+      // Listen for contract events
+      App.listenToEvents();
+
+      // Bind Javascript Events
+      App.bindEvents();
+    });
+  },
+
+  listenToEvents: function () {
+    App.contracts.SixersTrader.deployed().then(function(instance) {
+      instance.claimPlayerEvent({}, {
+        fromBlock: 0,
+        toBlock: 'latest'
+      }).watch(function(error, event) {
+        if (!error) {
+
+        } else {
+          console.error(error);
+        }
+        //App.reloadPlayers();
+      });
+    });
   },
 
   bindEvents: function() {
-    $(document).on('click', '.btn-claim', App.handleClaim);
+    $(document).on('click', '.btn-claim', App.claimPlayer);
   },
 
-  claimPlayer: function(playerId) {
-    console.log(playerId);
-  },
-
-  handleClaim: function(event) {
+  claimPlayer: function(event) {
     event.preventDefault();
 
     var playerId = parseInt($(event.target).data('id'));
+    console.log("Claiming player: " + playerId);
 
-    /*
-     * Replace me...
-     */
+    App.contracts.SixersTrader.deployed().then(function(instance) {
+      return instance.claimPlayer(playerId, {
+        from: App.account,
+        gas: 500000
+      });
+    }).then(function(result) {
+
+    }).catch(function(err) {
+      console.error(err);
+    });
   }
 
 };
