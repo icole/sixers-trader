@@ -41,7 +41,7 @@ contract SixersTrader {
       return balances[_owner];
     }
 
-    function totalSupply() constant returns (uint256 totalSupply) {
-      totalSupply = _totalSupply;
+    function totalSupply() constant returns (uint256) {
+      return _totalSupply;
     }
 }
