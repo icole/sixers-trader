@@ -31,4 +31,20 @@ contract('SixersTrader', function(accounts) {
       assert.equal(data.valueOf(), '1', "balance should be 1")
     });
   });
+
+  // Test case: adding a claimed playerId
+  it("should add the player to playerToAddress after claiming", function() {
+    return SixersTrader.deployed().then(function(instance) {
+      sixersTraderInstance = instance;
+      return sixersTraderInstance.claimPlayer(0, {
+        from: account
+      });
+    }).then(function() {
+      return sixersTraderInstance.playerToAddress(0);
+    }).then(function(data) {
+      assert.equal(data.valueOf(), account, "player 0 needs to be assigned to account");
+    });
+  });
+
+
 });

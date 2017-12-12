@@ -5,12 +5,13 @@ contract SixersTrader {
     string public name;
     string public symbol;
     uint8 public decimals;
-    uint256 _totalSupply = 17;
+    uint256 public totalSupply = 17;
     // Owner of this contract
     address public owner;
     // Balances for each account
-    mapping(uint256 => address) playerToAddress;
-    mapping(address => uint256) balances;
+    mapping(uint256 => address) public playerToAddress;
+    mapping(address => uint256[]) public addressToPlayers;
+    mapping(address => uint256) public balanceOf;
 
     // Events
     event claimPlayerEvent (
@@ -34,14 +35,13 @@ contract SixersTrader {
 
     function claimPlayer(uint256 playerId) {
       playerToAddress[playerId] = msg.sender;
-      balances[msg.sender]++;
+      addressToPlayers[msg.sender].push(playerId);
+      balanceOf[msg.sender]++;
+      claimPlayerEvent(playerId, msg.sender);
     }
 
-    function balanceOf(address _owner) constant returns (uint256 balance) {
-      return balances[_owner];
+    function getOwnedPlayers(address playerOwner) constant returns (uint256[]) {
+      return addressToPlayers[playerOwner];
     }
 
-    function totalSupply() constant returns (uint256) {
-      return _totalSupply;
-    }
 }

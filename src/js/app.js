@@ -56,6 +56,9 @@ App = {
       // Listen for contract events
       App.listenToEvents();
 
+      // Refresh owners of playersRow
+      App.refreshOwners();
+
       // Bind Javascript Events
       App.bindEvents();
     });
@@ -68,17 +71,17 @@ App = {
         toBlock: 'latest'
       }).watch(function(error, event) {
         if (!error) {
-
+          console.log("CLAIMED!");
         } else {
           console.error(error);
         }
-        //App.reloadPlayers();
+        //App.refreshOwners();
       });
     });
   },
 
   bindEvents: function() {
-    $(document).on('click', '.btn-claim', App.claimPlayer);
+    $(document).on('click', '.btn-claim:not(.disabled)', App.claimPlayer);
   },
 
   claimPlayer: function(event) {
@@ -93,9 +96,30 @@ App = {
         gas: 500000
       });
     }).then(function(result) {
-
     }).catch(function(err) {
       console.error(err);
+    });
+  },
+
+  refreshOwners: function() {
+    var sixersTraderInstance;
+    var ownerAddress;
+    App.contracts.SixersTrader.deployed().then(function(instance) {
+      sixersTraderInstance = instance;
+      for (var i = 0; i < 17; i++) {
+        sixersTraderInstance.playerToAddress(i).then(function(address) {
+          if (address != 0x0) {
+            ownerAddress = address;
+            sixersTraderInstance.getOwnedPlayers(ownerAddress).then(function(players) {
+              for (var j = 0; j < players.length; j++) {
+                var button = $('button[data-id="' + players[j] + '"]');
+                button.text("Owner: " + ownerAddress.substring(0, 10));
+                button.addClass("disabled");
+              }
+            });
+          }
+        });
+      }
     });
   }
 
