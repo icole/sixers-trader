@@ -109,11 +109,10 @@ App = {
       for (var i = 0; i < 17; i++) {
         sixersTraderInstance.playerToAddress(i).then(function(address) {
           if (address != 0x0) {
-            ownerAddress = address;
-            sixersTraderInstance.getOwnedPlayers(ownerAddress).then(function(players) {
+            sixersTraderInstance.getOwnedPlayers(address).then(function(players) {
               for (var j = 0; j < players.length; j++) {
                 var button = $('button[data-id="' + players[j] + '"]');
-                button.text("Owner: " + ownerAddress.substring(0, 10));
+                button.text("Owner: " + address.substring(0, 10));
                 button.addClass("disabled");
               }
             });
