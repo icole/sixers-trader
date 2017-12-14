@@ -1,0 +1,121 @@
+[
+  {
+    "id": 0,
+    "name": "Nik Stauskas",
+    "picture": "images/nik-stauskas.png",
+    "number": "11",
+    "position": "Guard"
+  },
+  {
+    "id": 1,
+    "name": "Ben Simmons",
+    "picture": "images/ben-simmons.png",
+    "number": "25",
+    "position": "Guard-Forward"
+  },
+  {
+    "id": 2,
+    "name": "Dario Saric",
+    "picture": "images/dario-saric.png",
+    "number": "9",
+    "position": "Forward"
+  },
+  {
+    "id": 3,
+    "name": "JJ Redick",
+    "picture": "images/jj-redick.png",
+    "number": "17",
+    "position": "Forward-Guard"
+  },
+  {
+    "id": 4,
+    "name": "Jacob Pullen",
+    "picture": "images/jacob-pullen.png",
+    "number": "00",
+    "position": "Guard"
+  },
+  {
+    "id": 5,
+    "name": "Jahlil Okafor",
+    "picture": "images/jahlil-okafor.png",
+    "number": "8",
+    "position": "Center"
+  },
+  {
+    "id": 6,
+    "name": "T.J. McConnell",
+    "picture": "images/tj-mcconnell.png",
+    "number": "12",
+    "position": "Guard"
+  },
+  {
+    "id": 7,
+    "name": "James Michael McAdoo",
+    "picture": "images/james-michael-mcadoo.png",
+    "number": "14",
+    "position": "Forward"
+  },
+  {
+    "id": 8,
+    "name": "Timothe Luwawu-Cabarrot",
+    "picture": "images/timothe-luwawu-cabarrot.png",
+    "number": "7",
+    "position": "Guard-Forward"
+  },
+  {
+    "id": 9,
+    "name": "Furkan Korkmaz",
+    "picture": "images/furkan-korkmaz.png",
+    "number": "30",
+    "position": "Guard-Forward"
+  },
+  {
+    "id": 10,
+    "name": "Amir Johnson",
+    "picture": "images/amir-johnson.png",
+    "number": "5",
+    "position": "Forward-Center"
+  },
+  {
+    "id": 11,
+    "name": "Richaun Holmes",
+    "picture": "images/richaun-holmes.png",
+    "number": "22",
+    "position": "Forward-Center"
+  },
+  {
+    "id": 12,
+    "name": "Markelle Fultz",
+    "picture": "images/markelle-fultz.png",
+    "number": "20",
+    "position": "Guard"
+  },
+  {
+    "id": 13,
+    "name": "Joel Embiid",
+    "picture": "images/joel-embiid.png",
+    "number": "21",
+    "position": "Center"
+  },
+  {
+    "id": 14,
+    "name": "Robert Covington",
+    "picture": "images/robert-covington.png",
+    "number": "33",
+    "position": "Forward"
+  },
+  {
+    "id": 15,
+    "name": "Jerryd Bayless",
+    "picture": "images/jerryd-bayless.png",
+    "number": "0",
+    "position": "Guard"
+  },
+  {
+    "id": 16,
+    "name": "Justin Anderson",
+    "picture": "images/justin-anderson.png",
+    "number": "1",
+    "position": "Guard-Forward"
+  }
+]
