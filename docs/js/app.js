@@ -4,7 +4,7 @@ App = {
 
   init: function() {
     // Load players.
-    $.getJSON('../data/players.json', function(data) {
+    $.getJSON('https://icole.github.io/sixers-trader/data/players.json', function(data) {
       var playersRow = $('#playersRow');
       var playerTemplate = $('#playerTemplate');
 
