@@ -15,34 +15,34 @@ contract('SixersTrader', function(accounts) {
     });
   });
 
-  // Test case: balanceOf after claiming a player
-  it("should increase the balance after claiming a player", function() {
+  // Test case: assetCount after claiming a player
+  it("should increase the count after claiming a player", function() {
     return SixersTrader.deployed().then(function(instance) {
       sixersTraderInstance = instance;
-      sixersTraderInstance.balanceOf(account).then(function(data) {
+      sixersTraderInstance.assetsCount(account).then(function(data) {
         assert.equal(data.valueOf(), '0', "initial balance should be 0");
       });
       return instance.claimPlayer(0, {
         from: account
       });
     }).then(function() {
-      return sixersTraderInstance.balanceOf(account)
+      return sixersTraderInstance.assetsCount(account)
     }).then(function(data) {
       assert.equal(data.valueOf(), '1', "balance should be 1")
     });
   });
 
   // Test case: adding a claimed playerId
-  it("should add the player to playerToAddress after claiming", function() {
+  it("should add the player to assets storage for the player owner", function() {
     return SixersTrader.deployed().then(function(instance) {
       sixersTraderInstance = instance;
-      return sixersTraderInstance.claimPlayer(0, {
+      return sixersTraderInstance.claimPlayer(1, {
         from: account
       });
     }).then(function() {
-      return sixersTraderInstance.playerToAddress(0);
+      return sixersTraderInstance.playerToAddress(1);
     }).then(function(data) {
-      assert.equal(data.valueOf(), account, "player 0 needs to be assigned to account");
+      assert.equal(data.valueOf(), account, "player 1 needs to be assigned to account");
     });
   });
 

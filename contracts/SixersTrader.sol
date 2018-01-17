@@ -1,17 +1,10 @@
-pragma solidity ^0.4.11;
+pragma solidity ^0.4.18;
 
-contract SixersTrader {
-    string public standard = 'PhillySixers';
-    string public name;
-    string public symbol;
-    uint8 public decimals;
-    uint256 public totalSupply = 17;
+import './erc821/StandardAssetRegistry.sol';
+
+contract SixersTrader is StandardAssetRegistry {
     // Owner of this contract
-    address public owner;
-    // Balances for each account
-    mapping(uint256 => address) public playerToAddress;
-    mapping(address => uint256[]) public addressToPlayers;
-    mapping(address => uint256) public balanceOf;
+    address public _owner;
 
     // Events
     event claimPlayerEvent (
@@ -19,29 +12,26 @@ contract SixersTrader {
       address indexed _seller
     );
 
-    // Functions with this modifier can only be executed by the owner
-    modifier onlyOwner() {
-      require(msg.sender == owner);
-      _;
-    }
-
     // Constructor
-    function SixersTrader() {
-      owner = msg.sender;
-      name = "PHILLYSIXERS";
-      symbol = "SIXERS";
-      decimals = 0;
+    function SixersTrader() public {
+      _owner = msg.sender;
+      _name = "PHILLYSIXERS";
+      _symbol = "SIXERS";
+      _description = "Philadelphia 76er's Trader";
+      _count = 17;
+
     }
 
-    function claimPlayer(uint256 playerId) {
-      playerToAddress[playerId] = msg.sender;
-      addressToPlayers[msg.sender].push(playerId);
-      balanceOf[msg.sender]++;
-      claimPlayerEvent(playerId, msg.sender);
+    function claimPlayer(uint256 playerId) public {
+      _generate(playerId, msg.sender, '');
     }
 
-    function getOwnedPlayers(address playerOwner) constant returns (uint256[]) {
-      return addressToPlayers[playerOwner];
+    function playerToAddress(uint256 playerId) public view returns (address) {
+      return _holderOf[playerId];
+    }
+
+    function getOwnedPlayers(address playerOwner) public view returns (uint256[]) {
+      return _assetsOf[playerOwner];
     }
 
 }
