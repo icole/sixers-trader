@@ -1,5 +1,5 @@
-var SixersTrader = artifacts.require("./SixersTrader.sol");
+var SixersJoelEmbiid = artifacts.require("./SixersJoelEmbiid.sol");
 
 module.exports = function(deployer) {
-  deployer.deploy(SixersTrader);
+  deployer.deploy(SixersJoelEmbiid);
 };

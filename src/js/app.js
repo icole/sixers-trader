@@ -46,7 +46,7 @@ App = {
   },
 
   initContract: function() {
-    $.getJSON('SixersTrader.json', function(sixersTraderArtifact) {
+    $.getJSON('/contracts/SixersJoelEmbiid.json', function(sixersTraderArtifact) {
       // Get the necessary contract artifact file and use it to instantiate a truffle contract abstraction.
       App.contracts.SixersTrader = TruffleContract(sixersTraderArtifact);
 
@@ -56,8 +56,8 @@ App = {
       // Listen for contract events
       App.listenToEvents();
 
-      // Refresh owners of playersRow
-      App.refreshOwners();
+      // Refresh claimed count
+      App.refreshClaimedCount();
 
       // Bind Javascript Events
       App.bindEvents();
@@ -87,7 +87,7 @@ App = {
   claimPlayer: function(event) {
     event.preventDefault();
 
-    var playerId = parseInt($(event.target).data('id'));
+    var playerId = parseInt($("#claimed-count").text());
     console.log("Claiming player: " + playerId);
 
     App.contracts.SixersTrader.deployed().then(function(instance) {
@@ -101,24 +101,13 @@ App = {
     });
   },
 
-  refreshOwners: function() {
+  refreshClaimedCount: function() {
     var sixersTraderInstance;
     var ownerAddress;
     App.contracts.SixersTrader.deployed().then(function(instance) {
-      sixersTraderInstance = instance;
-      for (var i = 0; i < 17; i++) {
-        sixersTraderInstance.playerToAddress(i).then(function(address) {
-          if (address != 0x0) {
-            sixersTraderInstance.getOwnedPlayers(address).then(function(players) {
-              for (var j = 0; j < players.length; j++) {
-                var button = $('button[data-id="' + players[j] + '"]');
-                button.text("Owner: " + address.substring(0, 10));
-                button.addClass("disabled");
-              }
-            });
-          }
-        });
-      }
+      return instance.claimedCount();
+    }).then(function(data) {
+      $("#claimed-count").text(data.valueOf());
     });
   }
 

@@ -1,5 +1,5 @@
 // Contract to be tested
-var SixersTrader = artifacts.require("./SixersTrader.sol");
+var SixersTrader = artifacts.require("./SixersJoelEmbiid.sol");
 
 // Test suite
 contract('SixersTrader', function(accounts) {
@@ -7,11 +7,11 @@ contract('SixersTrader', function(accounts) {
   var account = accounts[1];
 
   // Test case: check initial supply
-  it("should set the initial supply to 17", function() {
+  it("should set the initial supply to 20", function() {
     return SixersTrader.deployed().then(function(instance) {
       return instance.totalSupply.call();
     }).then(function(data) {
-      assert.equal(data.valueOf(), '17', "total supply should be 17");
+      assert.equal(data.valueOf(), '20', "total supply should be 20");
     });
   });
 
@@ -40,9 +40,18 @@ contract('SixersTrader', function(accounts) {
         from: account
       });
     }).then(function() {
-      return sixersTraderInstance.playerToAddress(1);
+      return sixersTraderInstance.idToAddress(1);
     }).then(function(data) {
       assert.equal(data.valueOf(), account, "player 1 needs to be assigned to account");
+    });
+  });
+
+  // Test case: claimed player count
+  it("should return the number of claimed ids", function() {
+    return SixersTrader.deployed().then(function(instance) {
+      return sixersTraderInstance.claimedCount();
+    }).then(function(data) {
+      assert.equal(data.valueOf(), 2, "claimed acount should be 2");
     });
   });
 
