@@ -11,8 +11,7 @@ App = {
       for (i = 0; i < data.length; i ++) {
         playerTemplate.find('.panel-title').text(data[i].name);
         playerTemplate.find('img').attr('src', data[i].picture);
-        playerTemplate.find('.player-position').text(data[i].position);
-        playerTemplate.find('.player-number').text(data[i].number);
+        playerTemplate.find('.player-edition').text(data[i].edition);
         playerTemplate.find('.btn-claim').attr('data-id', data[i].id);
 
         playersRow.append(playerTemplate.html());
@@ -111,6 +110,7 @@ App = {
       return instance.claimedCount();
     }).then(function(data) {
       $("#claimed-count").text(data.valueOf());
+      $(".player-edition-number").text(parseInt(data.valueOf()) + 1);
     });
   }
 
