@@ -46,7 +46,7 @@ App = {
   },
 
   initContract: function() {
-    $.getJSON('/contracts/SixersJoelEmbiid.json', function(sixersTraderArtifact) {
+    $.getJSON('SixersJoelEmbiid.json', function(sixersTraderArtifact) {
       // Get the necessary contract artifact file and use it to instantiate a truffle contract abstraction.
       App.contracts.SixersTrader = TruffleContract(sixersTraderArtifact);
 
@@ -93,9 +93,12 @@ App = {
     App.contracts.SixersTrader.deployed().then(function(instance) {
       return instance.claimPlayer(playerId, {
         from: App.account,
+        value: web3.toWei(0.05, "ether"),
         gas: 500000
       });
     }).then(function(result) {
+      console.log("CLAIMED!");
+      App.refreshClaimedCount();
     }).catch(function(err) {
       console.error(err);
     });

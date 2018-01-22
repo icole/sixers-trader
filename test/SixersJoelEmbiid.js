@@ -1,3 +1,7 @@
+require('chai')
+.use(require('chai-as-promised'))
+.should()
+
 // Contract to be tested
 var SixersTrader = artifacts.require("./SixersJoelEmbiid.sol");
 
@@ -5,6 +9,7 @@ var SixersTrader = artifacts.require("./SixersJoelEmbiid.sol");
 contract('SixersTrader', function(accounts) {
   var sixersTraderInstance;
   var account = accounts[1];
+  var account2 = accounts[2];
 
   // Test case: check initial supply
   it("should set the initial supply to 20", function() {
@@ -23,7 +28,8 @@ contract('SixersTrader', function(accounts) {
         assert.equal(data.valueOf(), '0', "initial balance should be 0");
       });
       return instance.claimPlayer(0, {
-        from: account
+        from: account,
+        value: web3.toWei(0.05, "ether")
       });
     }).then(function() {
       return sixersTraderInstance.assetsCount(account)
@@ -37,7 +43,8 @@ contract('SixersTrader', function(accounts) {
     return SixersTrader.deployed().then(function(instance) {
       sixersTraderInstance = instance;
       return sixersTraderInstance.claimPlayer(1, {
-        from: account
+        from: account,
+        value: web3.toWei(0.05, "ether")
       });
     }).then(function() {
       return sixersTraderInstance.idToAddress(1);
@@ -55,5 +62,35 @@ contract('SixersTrader', function(accounts) {
     });
   });
 
+  // Test case: transfering a claimed token
+  it("should succeed on transfering a claimed token", function() {
+    return SixersTrader.deployed().then(function(instance) {
+      sixersTraderInstance = instance;
+      return sixersTraderInstance.transfer(account2, 0, {
+        from: account
+      });
+    }).then(function() {
+      return sixersTraderInstance.assetsCount(account2);
+    }).then(function(data) {
+      assert.equal(data.valueOf(), '1', "balance should be 1")
+    });
+  });
+
+  // Test case: transfering an unclaimed token
+  it("should fail on transfering an unclaimed token", function() {
+    return SixersTrader.deployed().then(function(instance) {
+      return instance.transfer(account2, 5, { from: account2 }).should.be.rejected;
+    });
+  });
+
+  // Test case: claiming a token with amount below minimum
+  it("should fail on claiming a player with an amount below minimum", function() {
+    return SixersTrader.deployed().then(function(instance) {
+      return instance.claimPlayer(7, {
+        from: account,
+        value: web3.toWei(0.01, "ether")
+      }).should.be.rejected;
+    });
+  });
 
 });

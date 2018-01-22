@@ -22,7 +22,8 @@ contract SixersJoelEmbiid is StandardAssetRegistry {
 
     }
 
-    function claimPlayer(uint256 id) public {
+    function claimPlayer(uint256 id) payable public {
+      require(msg.value >= 0.05 ether);
       _generate(id, msg.sender, '');
     }
 
