@@ -58,7 +58,7 @@ typings/
 .env
 
 # Truffle build
-build/
+# build/
 
 # Elastic Beanstalk Files
 .elasticbeanstalk/*
